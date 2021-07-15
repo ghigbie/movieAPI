@@ -10,7 +10,7 @@ const indexRouter = require('./routes/index');
 // /movies/...
 const movieRouter = require('./routes/movie');
 // /serach/...
-const serachRouter = require('./routes/serach')
+const searchRouter = require('./routes/search')
 
 
 const app = express();
