@@ -4,10 +4,10 @@ const movieData = require('./../data/movies');
 
 
 /* GET home page. */
-router.get('/', (req, res, next) => {
-  const searchTerm = 'Toy'
+router.post('/', (req, res, next) => {
+  const searchQuery = req.body.title || 'Toy';
   const filteredMovies = movieData.map( movie => {
-   return movie.title.toLowerCase().includes(searchTerm.toLowerCase()) ? movie : null;
+   return movie.title.toLowerCase().includes(searchQuery.toLowerCase()) ? movie : null;
   });
 
   res.json({ 
