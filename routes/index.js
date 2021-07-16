@@ -8,7 +8,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/most_popular', (req, res, next) => {
-  const results = movies.map( movie => movie.popularity > 4)
+  const results = movies.filter( movie => movie.most_popular);
   res.json({
     movies: results
   });
