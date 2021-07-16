@@ -15,7 +15,8 @@ router.get('/most_popular', (req, res, next) => {
   }else{
     let results = movies.filter( movie => movie.most_popular);
     /* This  below usage of slice looks complicated, but the first number can be 0 and the second number can always result in 19 more than the first number */
-    results = results.slice(((page - 1) * 20), (((page - 1)*20)+19));
+    const indexToStart = (page-1)*20;
+    results = results.slice(indexToStart, indexToStart +19);
     res.json({
       movies: results
     });
