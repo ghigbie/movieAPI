@@ -5,7 +5,7 @@ const movieData = require('./../data/movies');
 
 /* GET home page. */
 router.post('/', (req, res, next) => {
-  const searchQuery = req.body.title || 'Toy';
+  const searchQuery = 'Toy';
   const filteredMovies = movieData.map( movie => {
    return movie.title.toLowerCase().includes(searchQuery.toLowerCase()) ? movie : null;
   });
