@@ -8,10 +8,18 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/most_popular', (req, res, next) => {
-  const results = movies.filter( movie => movie.most_popular);
-  res.json({
-    movies: results
-  });
+  const page = req.query.page || 0;
+  console.log('PAGE: ', page);
+  if(req.query.api_key !== '123456789'){ //could use string conversion here
+    res.json({message: "Invalid API key"});
+  }else{
+    let results = movies.filter( movie => movie.most_popular);
+    /* This  below usage of slice looks complicated, but the first number can be 0 and the second number can always result in 19 more than the first number */
+    results = results.slice(((page - 1) * 20), (((page - 1)*20)+19));
+    res.json({
+      movies: results
+    });
+}
 });
 
 module.exports = router;
