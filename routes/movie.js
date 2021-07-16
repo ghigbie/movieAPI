@@ -11,7 +11,9 @@ const movieDetails = require('./../data/movieDetails');
 
 router.get('/:movieId', (req, res, next) => {
   const movieId = req.params.movieId
-  const results = movieDetails.find( movie => movie.id === movieId);
+  console.log(movieId, '======')
+  const results = movieDetails.find( movie => movie.id === Number(movieId));
+  console.log(results);
   res.json({
     results
   });
