@@ -18,7 +18,8 @@ router.get('/most_popular', (req, res, next) => {
     const indexToStart = (page-1)*20;
     results = results.slice(indexToStart, indexToStart +19);
     res.json({
-      movies: results
+      page,
+      results
     });
 }
 });
