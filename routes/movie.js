@@ -9,20 +9,29 @@ const movies = require('./../data/movies');
 
 // DELETE /movie/{movie_id}/rating
 
+router.get('/top_rated', (req, res, next) => {
+  const results = movies.filter( movie => movie.most_popular === true );
+  res.json({
+    results
+  })
+});
+
 router.get('/:movieId', (req, res, next) => {
-  const movieId = req.params.movieId
+  const movieId = req.params.movieId;
   const results = movieDetails.find( movie => movie.id === Number(movieId));
   res.json({
     results
   });
 });
 
-router.get('/top_rated', (req, res, next) => {
-  const results = movieDetails.filter( movie => movie.most_popular === true )
+
+router.post('/:movieId/rating', (req, res, next) => {
+  const movieId = req.params.movieId;
+  const results = movieDetails.find( movie => movie.id === Number(movieId));
   res.json({
     results
   })
-});
+})
 
 
 module.exports = router;
