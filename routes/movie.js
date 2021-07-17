@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const movieDetails = require('./../data/movieDetails');
-
+const movies = require('./../data/movies');
 // needed routes
 // GET / movie /top_rated
 
@@ -11,12 +11,18 @@ const movieDetails = require('./../data/movieDetails');
 
 router.get('/:movieId', (req, res, next) => {
   const movieId = req.params.movieId
-  console.log(movieId, '======')
   const results = movieDetails.find( movie => movie.id === Number(movieId));
-  console.log(results);
   res.json({
     results
   });
-})
+});
+
+router.get('/top_rated', (req, res, next) => {
+  const results = movieDetails.filter( movie => movie.most_popular === true )
+  res.json({
+    results
+  })
+});
+
 
 module.exports = router;
