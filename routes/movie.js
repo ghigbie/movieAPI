@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const movieDetails = require('./../data/movieDetails');
-const movies = require('./../data/movies');
 // needed routes
 // GET / movie /top_rated
 
@@ -10,7 +9,7 @@ const movies = require('./../data/movies');
 // DELETE /movie/{movie_id}/rating
 
 router.get('/top_rated', (req, res, next) => {
-  const results = movies.filter( movie => movie.most_popular === true );
+  const results = movieDetails.sort( (a, b) => b.vote_average - a.vote_average);
   res.json({
     results
   })
