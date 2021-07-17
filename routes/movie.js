@@ -9,7 +9,11 @@ const movieDetails = require('./../data/movieDetails');
 // DELETE /movie/{movie_id}/rating
 
 router.get('/top_rated', (req, res, next) => {
-  const results = movieDetails.sort( (a, b) => b.vote_average - a.vote_average);
+  const page = req.query.page || 0; //if there's a page then use the value in the page 
+  let results = movieDetails.sort( (a, b) => b.vote_average - a.vote_average);
+    /* This  below usage of slice looks complicated, but the first number can be 0 and the second number can always result in 19 more than the first number */
+  const indexToStart = (page-1)*20;
+  results = results.slice(indexToStart, indexToStart + 19); //we are slicing the results
   res.json({
     results
   })
