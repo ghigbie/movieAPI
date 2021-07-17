@@ -19,9 +19,14 @@ router.get('/top_rated', (req, res, next) => {
 router.get('/:movieId', (req, res, next) => {
   const movieId = req.params.movieId;
   const results = movieDetails.find( movie => movie.id === Number(movieId));
+  results ? 
   res.json({
     results
-  });
+  })
+  :
+  res.json({
+    message: 'No results found'
+  })
 });
 
 
