@@ -48,12 +48,15 @@ router.get('/:movieId', (req, res, next) => {
 
 router.post('/:movieId/rating', requireJSON, (req, res, next) => {
   const movieId = req.params.movieId;
-  const userRating = req.body.value;
-  if(userRating < .5 || userRating > 10){
+  const userRating = Number(req.body.value);
+  console.log(req.body);
+  console.log('User Rating: ', userRating);
+  if(!userRating || userRating <= .491 || userRating >= 10.1){
     res.json({
-      message: 'Rating must be between .5 and 10'
+      message: 'Please enter a user rating between .5 and 10'
     });
   }else{
+    //update a database here
     res.json({ 
       statusCode: 200,
       message: 'Thank you for submitting your rating'
