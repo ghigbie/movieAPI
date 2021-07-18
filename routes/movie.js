@@ -51,7 +51,7 @@ router.post('/:movieId/rating', requireJSON, (req, res, next) => {
   const userRating = Number(req.body.value);
   console.log(req.body);
   console.log('User Rating: ', userRating);
-  if(!userRating || userRating <= .491 || userRating >= 10.1){
+  if(!userRating || userRating <= .49 || userRating >= 10.1){
     res.json({
       message: 'Please enter a user rating between .5 and 10'
     });
