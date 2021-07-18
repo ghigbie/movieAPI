@@ -8,6 +8,19 @@ const movieDetails = require('./../data/movieDetails');
 
 // DELETE /movie/{movie_id}/rating
 
+const requireJSON = (req, res, next) => {
+  const message = 'Content type must be "application/json"';
+  !req.is('application/json') && res.json({message});
+  next();
+}
+
+router.param(('movieId'), (req, res, next) =>{
+  //this runs whenever someone hits a route with movieID param
+  console.log('movieId param used in route');
+  
+  next();
+})
+
 router.get('/top_rated', (req, res, next) => {
   const page = req.query.page || 0; //if there's a page then use the value in the page 
   let results = movieDetails.sort( (a, b) => b.vote_average - a.vote_average);
@@ -33,12 +46,19 @@ router.get('/:movieId', (req, res, next) => {
 });
 
 
-router.post('/:movieId/rating', (req, res, next) => {
+router.post('/:movieId/rating', requireJSON, (req, res, next) => {
   const movieId = req.params.movieId;
-  const results = movieDetails.find( movie => movie.id === Number(movieId));
-  res.json({
-    results
-  })
+  const userRating = req.body.value;
+  if(userRating < .5 || userRating > 10){
+    res.json({
+      message: 'Rating must be between .5 and 10'
+    });
+  }else{
+    res.json({ 
+      statusCode: 200,
+      message: 'Thank you for submitting your rating'
+    });
+  }
 })
 
 
