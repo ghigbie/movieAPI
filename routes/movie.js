@@ -1,12 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const movieDetails = require('./../data/movieDetails');
-// needed routes
-// GET / movie /top_rated
-
-//POST /movie/{movie_id}/rating
-
-// DELETE /movie/{movie_id}/rating
 
 const requireJSON = (req, res, next) => {
   const message = 'Content type must be "application/json"';
@@ -49,20 +43,28 @@ router.get('/:movieId', (req, res, next) => {
 router.post('/:movieId/rating', requireJSON, (req, res, next) => {
   const movieId = req.params.movieId;
   const userRating = Number(req.body.value);
-  console.log(req.body);
   console.log('User Rating: ', userRating);
   if(!userRating || userRating <= .49 || userRating >= 10.1){
     res.json({
       message: 'Please enter a user rating between .5 and 10'
     });
   }else{
-    //update a database here
+    //update a database here use the movieId variable
     res.json({ 
       statusCode: 200,
       message: 'Thank you for submitting your rating'
     });
   }
 })
+
+router.delete('/movieId/rating', requireJSON, (req, res, next) => {
+  const movieId = req.params.movieId;
+  const message = "This rating has been deleted";
+  //update database to delete movie here use the movieId variable
+  res.json({
+    message
+  })
+});
 
 
 module.exports = router;
