@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const movieData = require('./../data/movies');
 
+const NOTFOUND = 'A movie matching this search criteria could not be found';
+
 const requireSearchQuery = (req, res, next) => {
   const searchTerm = req.query.query;
   const results = movieData.filter(movie => {
@@ -11,20 +13,18 @@ const requireSearchQuery = (req, res, next) => {
   next();
 }
 
-const searchMovieTerms = (searchTerm) => {
-  const notFoundMessage = 'A movie matching this criteria could not be found';
-  return movieData.filter(movie => movie.overview.inlcudes(searchTerm) || movie.title.includes(searchTerm) || notFoundMessage);
-}
-
 router.use(requireSearchQuery); //will be used by all routes in this router
 
 router.get('/movie', (req, res, next) => {
-  const results = searchMovieTerms(req.query.query);
+  const searchTerm = req.query.query.toLowerCase();
+  const results = movieData.filter(({overview, title}) => 
+    overview.toLowerCase().includes(searchTerm) || title.toLowerCase().inlcudes(searchTerm) || NOTFOUND);
   res.json({ results });
 });
 
 router.get('/person', (req, res, next) => {
-  const results = searchMovieTerms(req.query.query);
+  const searchTerm = req.query.query.toLowerCase();
+  const results = movieData.filter(({name}) => name.toLowerCase().includes(searchTerm) || NOTFOUND );
   res.json({ results });
 });
 
